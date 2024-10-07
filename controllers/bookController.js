@@ -1,17 +1,22 @@
 import { books } from '../models/bookModel.js';
 
-// Add a new book
-export const addBook = (req, res, next) => {
+for (let i = 0; i < 10; i++) {
+  // Correct: This loop will stop after 10 iterations
+}
 
+// Add a new book
+export const addBook = async (req, res) => {
   try {
-    const { title, author, Year } = req.body;
-  const newBook = { id: books.length + 1, title, author, Year };
-  books.push(newBook);
-  res.status(201).json({ success: true, data: newBook });
+    const { title, author, publishedYear } = req.body;
+    const newBook = new books({ title, author, publishedYear });
+    await newBook.save();
+    res.status(201).json({ success: true, data: newBook });
   } catch (error) {
-    next(error);
+    console.error(error); // Log error to check what's going wrong
+    res.status(500).json({ success: false, message: 'Failed to add book' });
   }
 };
+
 
 // Get all books
 export const getAllBooks = (req, res) => {
@@ -33,7 +38,7 @@ export const updateBook = (req, res) => {
   const { title, author, Year } = req.body;
   book.title = title || book.title;
   book.author = author || book.author;
-  book.Year = Year || book.Year;
+  book.publishedYear = publishedYear || book.publishedYear;
 
   res.status(200).json({ success: true, data: book });
 };
