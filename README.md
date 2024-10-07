@@ -11,7 +11,7 @@ A simple CRUD Books API using Node.js, Express, and ES Modules.
    ```
 3. Create a `.env` file and set the following variables:
    ```
-   PORT=5000
+   PORT=3000
    ```
 4. Run the server:
    ```bash
