@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import bookRoutes from './routes/bookRoutes.js';
+import reviewRoutes from "./routes/reviewRoutes.js";
 import { errorHandler } from './middlewares/errorMiddleware.js';
 
 dotenv.config();
@@ -13,6 +14,7 @@ app.use(express.json());
 
 // Use the book routes without /api prefix
 app.use(bookRoutes);
+app.use(reviewRoutes);
 
 // Error handling middleware
 app.use(errorHandler);

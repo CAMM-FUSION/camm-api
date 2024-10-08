@@ -51,9 +51,9 @@ export const updateBook = (req, res) => {
 };
 
 // Delete a book
-export const deleteBook = (req, res) => {
-  const bookIndex = books.findIndex(b => b.id === parseInt(req.params.id));
-  if (bookIndex === -1) return res.status(404).json({ success: false, message: 'Book not found' });
+export const deleteBook = async (req, res) => {
+  try {
+    const { id } = req.params;
 
   book.splice(bookIndex, 1);
   res.status(200).json({ success: true, message: 'Book deleted' });
