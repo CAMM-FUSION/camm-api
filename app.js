@@ -13,6 +13,8 @@ app.use(bookRoutes);
 
 app.use(errorHandler);
 
+app.use('/api/authors, authorRoutes');
+
 // await mongoose.connect(process.env.MONGO_URI)
 
 export default app;
