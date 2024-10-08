@@ -7,6 +7,7 @@ export const validateBook = (req, res, next) => {
     summary: Joi.string().min(3).required(),
     author: Joi.string().min(3).required(),
     publishedYear: Joi.number().integer().required()
+
   });
 
   const { error } = schema.validate(req.body);

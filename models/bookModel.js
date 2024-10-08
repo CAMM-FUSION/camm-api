@@ -20,12 +20,12 @@ const bookSchema = new mongoose.Schema({
     minlength: 3
   },
 
-  cover: {
-    type: String,
-    required: true,
-  },
+cover: {
+  type: String,
+  required: true,
+},
 
-  publishedYear: {
+publishedYear: {
     type: Number,
     required: true,
   }
