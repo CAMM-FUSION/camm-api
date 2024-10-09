@@ -3,6 +3,9 @@ import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import bookRoutes from './routes/bookRoutes.js';
 import { errorHandler } from './middlewares/errorMiddleware.js';
+import path from  'path';
+import { fileURLToPath } from 'url';
+
 
 dotenv.config();
 
@@ -13,6 +16,11 @@ app.use(express.json());
 
 // Use the book routes without /api prefix
 app.use(bookRoutes);
+
+// Files from upload directory
+const __filename = fileURLToPath(import.meta.url);  // Get the filename
+const __dirname = path.dirname(__filename);  // Get the directory nam
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Error handling middleware
 app.use(errorHandler);
