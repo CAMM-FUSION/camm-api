@@ -4,6 +4,8 @@ import mongoose from 'mongoose';
 import bookRoutes from './routes/bookRoutes.js';
 import reviewRoutes from "./routes/reviewRoutes.js";
 import { errorHandler } from './middlewares/errorMiddleware.js';
+import path from  'path';
+import { fileURLToPath } from 'url';
 import authorRoutes from "./routes/authorRoutes.js"
 
 dotenv.config();
@@ -17,6 +19,11 @@ app.use(express.json());
 app.use(bookRoutes);
 app.use(reviewRoutes);
 app.use(authorRoutes)
+
+// Files from upload directory
+const __filename = fileURLToPath(import.meta.url);  // Get the filename
+const __dirname = path.dirname(__filename);  // Get the directory nam
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Error handling middleware
 app.use(errorHandler);
