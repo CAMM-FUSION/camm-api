@@ -1,5 +1,5 @@
 import express from 'express';
-import { createAuthor, deleteAuthor, getAuthorById, getAuthors, updateAuthor } from '../controllers/authorController';
+import { createAuthor, deleteAuthor, getAuthorById, getAuthors, updateAuthor } from '../controllers/authorController.js';
 const router = express.Router();
 
 
@@ -13,7 +13,7 @@ router.get('/authors', getAuthors);
 router.get('/authors/:id', getAuthorById);
 
 // PUT - Update an author by ID
-router.put('/authors/:id', updateAuthor);
+router.patch ('/authors/:id', updateAuthor);
 
 // DELETE - Delete an author by ID
 router.delete('/authors/:id', deleteAuthor);

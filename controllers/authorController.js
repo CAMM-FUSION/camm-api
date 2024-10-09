@@ -30,20 +30,20 @@
 // const Author = mongoose.model('Author', authorSchema);
 // exports = Author;
 
-import { Author } from '../models/authorModel';
-import { object, string, date } from 'joi';
+import { Author } from '../models/authorModel.js';
+// import { object, string, date } from 'joi';
 
-// Joi validation schema for authors
-const authorValidationSchema = object({
-    name: string().required(),
-    birthDate: date().required(),
-    bio: string().optional()
-});
+// // Joi validation schema for authors
+// const authorValidationSchema = object({
+//     name: string().required(),
+//     // birthDate: date().required(),
+//     bio: string().optional()
+// });
 
 // Create a new author
 export async function createAuthor(req, res) {
-    const { error } = authorValidationSchema.validate(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
+    // const { error } = authorValidationSchema.validate(req.body);
+    // if (error) return res.status(400).send(error.details[0].message);
 
     try {
         let author = new Author(req.body);
@@ -57,7 +57,7 @@ export async function createAuthor(req, res) {
 // Get all authors
 export async function getAuthors(req, res) {
     try {
-        const authors = await find();
+        const authors = await Author.find();
         res.status(200).send(authors);
     } catch (err) {
         res.status(500).send('Error fetching authors: ' + err.message);
@@ -67,7 +67,7 @@ export async function getAuthors(req, res) {
 // Get an author by ID
 export async function getAuthorById(req, res) {
     try {
-        const author = await findById(req.params.id);
+        const author = await Author.findById(req.params.id);
         if (!author) return res.status(404).send('Author not found');
         res.status(200).send(author);
     } catch (err) {
@@ -77,11 +77,11 @@ export async function getAuthorById(req, res) {
 
 // Update an author
 export async function updateAuthor(req, res) {
-    const { error } = authorValidationSchema.validate(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
+    // const { error } =      authorValidationSchema.validate(req.body);
+    // if (error) return res.status(400).send(error.details[0].message);
 
     try {
-        const author = await findByIdAndUpdate(req.params.id, req.body, { new: true });
+        const author = await Author.findByIdAndUpdate(req.params.id, req.body, { new: true });
         if (!author) return res.status(404).send('Author not found');
         res.status(200).send(author);
     } catch (err) {
@@ -92,7 +92,7 @@ export async function updateAuthor(req, res) {
 // Delete an author
 export async function deleteAuthor(req, res) {
     try {
-        const author = await findByIdAndDelete(req.params.id);
+        const author = await Author.findByIdAndDelete(req.params.id);
         if (!author) return res.status(404).send('Author not found');
         res.status(200).send({ message: 'Author deleted successfully' });
     } catch (err) {
