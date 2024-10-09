@@ -2,10 +2,11 @@ import express from 'express';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import bookRoutes from './routes/bookRoutes.js';
+import reviewRoutes from "./routes/reviewRoutes.js";
 import { errorHandler } from './middlewares/errorMiddleware.js';
 import path from  'path';
 import { fileURLToPath } from 'url';
-
+import authorRoutes from "./routes/authorRoutes.js"
 
 dotenv.config();
 
@@ -16,6 +17,8 @@ app.use(express.json());
 
 // Use the book routes without /api prefix
 app.use(bookRoutes);
+app.use(reviewRoutes);
+app.use(authorRoutes)
 
 // Files from upload directory
 const __filename = fileURLToPath(import.meta.url);  // Get the filename
@@ -31,7 +34,7 @@ mongoose.connect(process.env.MONGO_URI)
   .catch(err => console.error('MongoDB connection error:', err));
 
 // Start server
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
