@@ -13,7 +13,7 @@ router.get('/authors', getAuthors);
 router.get('/authors/:id', getAuthorById);
 
 // PUT - Update an author by ID
-router.patch('/authors/:id', updateAuthor);
+router.patch ('/authors/:id', updateAuthor);
 
 // DELETE - Delete an author by ID
 router.delete('/authors/:id', deleteAuthor);

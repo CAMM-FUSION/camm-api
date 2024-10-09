@@ -67,7 +67,7 @@ export async function getAuthors(req, res) {
 // Get an author by ID
 export async function getAuthorById(req, res) {
     try {
-        const author = await findById(req.params.id);
+        const author = await Author.findById(req.params.id);
         if (!author) return res.status(404).send('Author not found');
         res.status(200).send(author);
     } catch (err) {
