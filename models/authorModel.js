@@ -7,7 +7,7 @@ const authorSchema = new mongoose.Schema({
     },
     birthDate: {
         type: Date,
-        // required: true
+      //  required: true
     },
     bio: {
         type: String
