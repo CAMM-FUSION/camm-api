@@ -6,7 +6,8 @@ import reviewRoutes from "./routes/reviewRoutes.js";
 import { errorHandler } from './middlewares/errorMiddleware.js';
 import path from  'path';
 import { fileURLToPath } from 'url';
-import authorRoutes from "./routes/authorRoutes.js"
+import authorRoutes from "./routes/authorRoutes.js";
+import cors from 'cors';
 
 dotenv.config();
 
@@ -14,7 +15,7 @@ const app = express();
 
 // Middleware for JSON parsing
 app.use(express.json());
-
+app.use(cors());
 // Use the book routes without /api prefix
 app.use(bookRoutes);
 app.use(reviewRoutes);
