@@ -1,18 +1,39 @@
 import Book from '../models/bookModel.js';
 import mongoose from 'mongoose';
 
-for (let i = 0; i < 10; i++) {
-  // This loop will stop after 10 iterations
-} 
+// for (let i = 0; i < 10; i++) {
+//   // This loop will stop after 10 iterations
+// } 
+
+
+// Search books
+export const searchBooks = async (req, res) => {
+  try {
+    const { title, author, year } = req.query;
+    let query = {};
+
+    // Add regular expression-based search conditions
+    if (title) query.title = { $regex: title, $options: 'i' };
+    if (author) query.author = { $regex: author, $options: 'i' };
+    if (year) query.year = year; 
+
+    // Fetch books from the database based on query
+    const books = await Book.find(query);
+
+    // Return the found books
+    res.status(200).json(books);
+  } catch (error) {
+    // Handle any errors
+    res.status(500).json({ message: error.message });
+  }
+};
+
 
 
 // Add a new book with cover image
 export const addBook = async (req, res) => {
   try {
-    const { title, author, publishedYear, summary, NumberOfPages, genres, publisher,language } = req.body;
-
-    // Get the image file from req.file (uploaded by multer)
-    const coverImage = req.file ? `/uploads/${req.file.filename}` : null;
+    const { title, author, publishedYear, summary, NumberOfPages, genres, publisher,language, cover } = req.body;
 
     // Create a new book object with image path
     const newBook = new Book({
@@ -20,7 +41,7 @@ export const addBook = async (req, res) => {
       author,
       publishedYear,
       summary,
-      cover: coverImage,  // Store the path to the uploaded cover image
+      cover, // Store the path to the uploaded cover image
       NumberOfPages,
       genres,
       publisher,
@@ -31,7 +52,7 @@ export const addBook = async (req, res) => {
     await newBook.save();
 
     // Send a response with the newly created book
-    res.status(201).json({ success: true, data: newBook });
+    res.status(201).json({ success: true, message: 'Book added successfully', data: newBook });
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, message: 'Failed to add book' });
@@ -69,15 +90,13 @@ export const getBookById = async (req, res) => {
 export const updateBook = async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, author, publishedYear, summary, language, NumberOfPages, genres, publisher } = req.body;
+    const { title, author, publishedYear, summary, language, NumberOfPages, genres, publisher, cover } = req.body;
 
     // Validate MongoDB ObjectId (in case it's invalid)
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({ success: false, message: 'Invalid Book ID' });
     }
 
-    // Get the uploaded cover image file (if any)
-    const coverImage = req.file ? `/uploads/${req.file.filename}` : null;
 
     // Prepare the updated data (only update fields that are provided)
     const updatedData = {
@@ -85,7 +104,7 @@ export const updateBook = async (req, res) => {
       author: author || undefined,
       publishedYear: publishedYear || undefined,
       summary: summary || undefined,
-      cover: coverImage || undefined,  // Only update if a new image was uploaded
+      cover: cover|| undefined,  // Only update if a new image was uploaded
       language: language || undefined,
       NumberOfPages: NumberOfPages || undefined,
       genres: genres || undefined,
