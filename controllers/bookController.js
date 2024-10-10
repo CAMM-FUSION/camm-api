@@ -9,10 +9,10 @@ for (let i = 0; i < 10; i++) {
 // Add a new book with cover image
 export const addBook = async (req, res) => {
   try {
-    const { title, author, publishedYear, summary } = req.body;
+    const { title, author, publishedYear, summary, NumberOfPages, genres, publisher,language } = req.body;
 
     // Get the image file from req.file (uploaded by multer)
-    const coverImage = req.file ? `/uploads/${req.file.filename}` : null;  // Use the image path or null
+    const coverImage = req.file ? `/uploads/${req.file.filename}` : null;
 
     // Create a new book object with image path
     const newBook = new Book({
@@ -20,7 +20,11 @@ export const addBook = async (req, res) => {
       author,
       publishedYear,
       summary,
-      cover: coverImage  // Store the path to the uploaded cover image
+      cover: coverImage,  // Store the path to the uploaded cover image
+      NumberOfPages,
+      genres,
+      publisher,
+      language
     });
 
     // Save the new book to the database
@@ -65,7 +69,7 @@ export const getBookById = async (req, res) => {
 export const updateBook = async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, author, publishedYear, summary } = req.body;
+    const { title, author, publishedYear, summary, language, NumberOfPages, genres, publisher } = req.body;
 
     // Validate MongoDB ObjectId (in case it's invalid)
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -81,7 +85,11 @@ export const updateBook = async (req, res) => {
       author: author || undefined,
       publishedYear: publishedYear || undefined,
       summary: summary || undefined,
-      cover: coverImage || undefined  // Only update if a new image was uploaded
+      cover: coverImage || undefined,  // Only update if a new image was uploaded
+      language: language || undefined,
+      NumberOfPages: NumberOfPages || undefined,
+      genres: genres || undefined,
+      publisher: publisher || undefined
     };
 
     // Find the book by ID and update it
