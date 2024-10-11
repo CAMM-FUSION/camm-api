@@ -57,7 +57,7 @@ export async function createAuthor(req, res) {
 // Get all authors
 export async function getAuthors(req, res) {
     try {
-        const authors = await Author.find();
+        const authors = await Author.find().populate('books');
         res.status(200).send(authors);
     } catch (err) {
         res.status(500).send('Error fetching authors: ' + err.message);
