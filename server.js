@@ -8,6 +8,7 @@ import path from  'path';
 import { fileURLToPath } from 'url';
 import authorRoutes from "./routes/authorRoutes.js";
 import cors from 'cors';
+import authRoutes from "./routes/authRoutes.js";
 
 dotenv.config();
 
@@ -16,10 +17,14 @@ const app = express();
 // Middleware for JSON parsing
 app.use(express.json());
 app.use(cors());
+
 // Use the book routes without /api prefix
 app.use(bookRoutes);
 app.use(reviewRoutes);
-app.use(authorRoutes)
+app.use(authorRoutes);
+app.use(authRoutes);
+// app.use(bookRoutes);
+// app.use('/api/authors, authorRoutes');
 
 // Files from upload directory
 const __filename = fileURLToPath(import.meta.url);  // Get the filename

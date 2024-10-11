@@ -18,7 +18,6 @@ const bookSchema = new mongoose.Schema({
   language: {
     type: String,
   },
-
   cover: {
     type: String,
   },
